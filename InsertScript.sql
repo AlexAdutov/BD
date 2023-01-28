@@ -54,8 +54,8 @@ VALUES
 ('10', 'Let It Be', '00:04:03'),
 ('11', 'Gimme Shelter', '00:04:37'),
 ('12', 'Remember the Time', '00:04:00'),
-('12', 'Who Is It', '00:04:15')
-;
+('12', 'Who Is It', '00:04:15'),
+('9', 'Ballbreaker', '00:04:31');
 
 INSERT INTO collection (title, release_year)
 VALUES
@@ -98,6 +98,17 @@ VALUES
 ('6', '10'),
 ('6', '12');
 
+INSERT INTO albumartists (album_id, artists_id)
+VALUES
+('1', '1'),
+('2', '2'),
+('3', '3'),
+('4', '4'),
+('5', '5'),
+('6', '6'),
+('7', '7'),
+('8', '8');
+
 INSERT INTO TrackCollection (track_id, collection_id)
 VALUES 
 ('1', '1'),
@@ -127,6 +138,5 @@ VALUES
 ('10', '7'),
 ('11', '7'),
 ('12', '7'),
-('14', '8')
-;
+('14', '8');
 
