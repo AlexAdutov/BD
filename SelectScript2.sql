@@ -11,10 +11,20 @@ SELECT a.title AS album_title, avg(t.duration) AS average_duration FROM tracks t
 JOIN album a ON t.album_id = a.id
 GROUP BY a.title;
 
-SELECT ar.nickname AS singer_name, al.YEAR AS album_year FROM artists ar 
+-- SELECT ar.nickname AS singer_name, al.YEAR AS album_year FROM artists ar 
+-- JOIN albumartists aa ON ar.id = aa.artists_id  
+-- JOIN album al ON aa.album_id = al.id 
+-- WHERE NOT (al.year = 2020); 
+
+SELECT ar.nickname AS singer_name, al.YEAR AS album_year 
+FROM artists ar 
+	JOIN albumartists aa ON ar.id = aa.artists_id  
+	JOIN album al ON aa.album_id = al.id 
+WHERE ar.nickname NOT in (SELECT ar.nickname AS singer_name FROM artists ar 
 JOIN albumartists aa ON ar.id = aa.artists_id  
 JOIN album al ON aa.album_id = al.id 
-WHERE NOT (al.year = 2020); 
+WHERE al.year IN ('2020')); 
+
 
 SELECT c.title FROM collection c 
 JOIN trackcollection tc ON c.id = tc.collection_id
@@ -42,9 +52,18 @@ JOIN album al ON aa.album_id = al.id
 JOIN tracks t ON al.id  = t.album_id  
 WHERE t.duration = (SELECT MIN(duration) FROM tracks);
 
+-- SELECT a.title, count(a.title) AS count FROM album a 
+-- JOIN tracks t ON a.id = t.album_id 
+-- GROUP BY a.title
+-- ORDER BY count
+-- LIMIT 1;
+
 SELECT a.title, count(a.title) AS count FROM album a 
 JOIN tracks t ON a.id = t.album_id 
 GROUP BY a.title
-ORDER BY count
-LIMIT 1;
+HAVING a.title = (SELECT a.title FROM album a 
+JOIN tracks t ON a.id = t.album_id 
+GROUP BY a.title 
+ORDER BY COUNT(a.title)
+LIMIT 1);
 
